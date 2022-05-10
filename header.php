@@ -98,6 +98,28 @@ if (!defined('ABSPATH')) {
                 </li>
             <?php endforeach ?>
         </ul>
+        <form action="http://localhost:8000/" method="get">
+            <input type="text" name="s" id="searchForm">
+            <button type="submit">Search</button>
+        </form>
+        <?php
+        global $woocommerce;
+        $items = $woocommerce->cart->get_cart();
+
+        foreach ($items as $item => $values) {
+            $_product =  wc_get_product($values['data']->get_id());
+            //product image
+            $getProductDetail = wc_get_product($values['product_id']);
+            echo $getProductDetail->get_image(); // accepts 2 arguments ( size, attr )
+
+            echo "<b>" . $_product->get_title() . '</b>  <br> Quantity: ' . $values['quantity'] . '<br>';
+            $price = get_post_meta($values['product_id'], '_price', true);
+            echo "  Price: " . $price . "<br>";
+            /*Regular Price and Sale Price*/
+        }
+        $amount2 = $woocommerce->cart->get_cart_total();
+        ?>
+        <?= $amount2 ?>
         <div id="content" class="site-content">
             <div class="ast-container">
                 <?php astra_content_top(); ?>
