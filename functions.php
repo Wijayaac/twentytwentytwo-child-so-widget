@@ -1,38 +1,29 @@
 <?php
 
-add_action('wp_enqueue_scripts', 'parent_enqueue_styles');
-add_action('wp_enqueue_scripts', 'child_enqueue_styles');
+/**
+ * Astra Child Theme functions and definitions
+ *
+ * @link https://developer.wordpress.org/themes/basics/theme-functions/
+ *
+ * @package Astra Child
+ * @since 1.0.0
+ */
 
-function parent_enqueue_styles()
-{
-    $parent_handle = 'twentytwentytwo-style';
-    $theme = wp_get_theme();
+/**
+ * Define Constants
+ */
+define('CHILD_THEME_ASTRA_CHILD_VERSION', '1.0.0');
 
-    wp_enqueue_style(
-        $parent_handle,
-        get_template_directory_uri() . '/style.css',
-        array(),
-        $theme->parent()->get('Version')
-    );
-
-    wp_enqueue_style(
-        'child-style',
-        get_stylesheet_uri(),
-        array($parenthandle),
-        $theme->get('Version')
-    );
-}
+/**
+ * Enqueue styles
+ */
 function child_enqueue_styles()
 {
 
-    wp_enqueue_style(
-        'custom-child-style',
-        get_stylesheet_directory_uri() . '/style.css',
-        false,
-        '1.0',
-        'all'
-    );
+    wp_enqueue_style('astra-child-theme-css', get_stylesheet_directory_uri() . '/style.css', array('astra-theme-css'), CHILD_THEME_ASTRA_CHILD_VERSION, 'all');
 }
+
+add_action('wp_enqueue_scripts', 'child_enqueue_styles', 15);
 
 // widget
 function custom_widget_test($folders)
